@@ -58,7 +58,7 @@ router.onUnhandled((event) => {
 
 ## Connect to http server
 
-Using a middleware
+Using the middleware
 
 ```typescript
 import { getMiddleware } from "cloudevents-router"
