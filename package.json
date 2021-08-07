@@ -1,6 +1,6 @@
 {
   "name": "cloudevents-router",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Simple typed message router middleware for consuming cloudevents",
   "main": "./build/index.js",
   "files": [
@@ -9,7 +9,7 @@
   "scripts": {
     "prepack": "tsc",
     "test": "jest",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release -b main --no-ci"
   },
   "repository": {
     "type": "git",
