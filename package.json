@@ -4,6 +4,11 @@
   "description": "Simple typed message router middleware for consuming cloudevents",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
+  "keywords": [
+    "cloudevents",
+    "router",
+    "stackables"
+  ],
   "files": [
     "build"
   ],
