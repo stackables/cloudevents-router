@@ -1,0 +1,26 @@
+{
+  "name": "cloudevents-router",
+  "version": "0.0.1",
+  "description": "Simple typed message router middleware for consuming cloudevents",
+  "main": "./build/index.js",
+  "scripts": {
+    "prepack": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stackables/cloudevents-router.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stackables/cloudevents-router/issues"
+  },
+  "homepage": "https://github.com/stackables/cloudevents-router#readme",
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.2",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "cloudevents": "^4.0.3"
+  }
+}
