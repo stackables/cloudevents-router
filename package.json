@@ -3,8 +3,12 @@
   "version": "0.0.1",
   "description": "Simple typed message router middleware for consuming cloudevents",
   "main": "./build/index.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
-    "prepack": "tsc"
+    "prepack": "tsc",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -18,7 +22,16 @@
   "homepage": "https://github.com/stackables/cloudevents-router#readme",
   "devDependencies": {
     "@tsconfig/node16": "^1.0.2",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.4.13",
+    "axios": "^0.21.1",
+    "jest": "^27.0.6",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
+  },
+  "jest": {
+    "preset": "ts-jest"
   },
   "dependencies": {
     "cloudevents": "^4.0.3"
