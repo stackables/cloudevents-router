@@ -2,6 +2,8 @@
 
 The simplest typed  [cloudevents](https://github.com/cloudevents/sdk-javascript) routing library for nodejs. Library has a single dependency to cloudevents npm library.
 
+**Library does not provide any input validation, just routing and typecasting!**
+
 ## Install
 
 ```
