@@ -1,6 +1,6 @@
 {
   "name": "cloudevents-router",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple typed message router middleware for consuming cloudevents",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
