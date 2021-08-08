@@ -56,6 +56,8 @@ router.onUnhandled((event) => {
 })
 ```
 
+[See example for more useful PubSub handling](https://github.com/stackables/cloudevents-router/blob/main/test/republish.test.ts)
+
 ## Connect to http server
 
 Using the middleware
