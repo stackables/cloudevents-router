@@ -1,7 +1,10 @@
-import { MessagePublishedData } from '@google/events/cloud/pubsub/v1/MessagePublishedData'
+import { Message, MessagePublishedData } from '@google/events/cloud/pubsub/v1/MessagePublishedData'
 import { CloudEvent } from "cloudevents"
 import { CloudEventsRouter } from '../src'
 
+// This is a bit hackish
+//      as the resulting type for message will be intersection with string
+//      but its simple to demonstrate the idea
 type MessagePublishedDataExtended1 = MessagePublishedData & {
     message: {
         data: {
@@ -10,8 +13,14 @@ type MessagePublishedDataExtended1 = MessagePublishedData & {
     }
 }
 
-type MessagePublishedDataExtended2 = MessagePublishedData & {
-    message: {
+// A more complete example would be something like this
+//      but im sure there is some more generic typescript mgic that we can use
+//      if anyone can figure out how to reaplce string with object in nested types
+//      pease update this example :)
+type MessagePublishedDataWithoutMessage = Omit<MessagePublishedData, "message">
+type MessageWithoutData = Omit<Message, "data">
+type MessagePublishedDataExtended2 = MessagePublishedDataWithoutMessage & {
+    message: MessageWithoutData & {
         data: {
             user: string
         }
@@ -44,6 +53,7 @@ test('Republish PubSub example', async () => {
             data: {
                 ...event.data,
                 message: {
+                    ...event.data.message,
                     data: JSON.parse(Buffer.from(event.data.message?.data || 'bnVsbA==', 'base64').toString())
                 }
             }
@@ -55,11 +65,15 @@ test('Republish PubSub example', async () => {
      * Local handlers still get the original event but message.data is parsed
      */
     router.on('local.pubsub.topic.build-events-1', (event) => {
+        expect(event.data.subscription).toEqual('subscription')
+        expect(event.data.message.messageId).toEqual('my-message-id')
         expect(new Date(event.data.message.data.currentTime)).toEqual(new Date('2021-08-08T07:45:45.190Z'))
         called++
     })
 
     router.on('local.pubsub.topic.build-events-2', (event) => {
+        expect(event.data.subscription).toEqual('subscription')
+        expect(event.data.message.messageId).toEqual('my-message-id')
         expect(event.data.message.data.user).toEqual('test user')
         called++
     })
@@ -75,7 +89,7 @@ test('Republish PubSub example', async () => {
                     messageId: 'my-message-id',
                     publishTime: '2020-08-14T20:50:04.994Z',
                 },
-                subscription: '//subscription',
+                subscription: 'subscription',
             }
         })
 

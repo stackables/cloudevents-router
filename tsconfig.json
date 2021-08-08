@@ -3,6 +3,7 @@
     "compilerOptions": {
         "outDir": "build",
         "declaration": true,
+        "strictNullChecks": true,
     },
     "include": [
         "src"
