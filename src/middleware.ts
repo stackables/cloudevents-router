@@ -66,7 +66,7 @@ export function getMiddleware(router: CloudEventsRouter<any>, opts: MiddlewareOp
             await router.process(receivedEvent)
             res.writeHead(200, 'OK');
             return res.end('OK')
-        } catch (error) {
+        } catch (error: any) {
             if (error.message === 'Not Implemented') {
                 res.writeHead(501, 'Not Implemented');
                 return res.end('Not Implemented')
