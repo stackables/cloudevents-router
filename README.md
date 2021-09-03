@@ -1,3 +1,5 @@
+[![npm](https://img.shields.io/npm/v/cloudevents-router?label=cloudevents-router&logo=npm)](https://www.npmjs.com/package/cloudevents-router)
+
 # Cloud Events Router
 
 The simplest typed  [cloudevents](https://github.com/cloudevents/sdk-javascript) routing library for nodejs. Library has a single dependency to cloudevents npm library.
