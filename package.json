@@ -15,7 +15,7 @@
   "scripts": {
     "prepack": "tsc",
     "test": "jest",
-    "semantic-release": "semantic-release -b main --no-ci"
+    "semantic-release": "semantic-release -b main"
   },
   "repository": {
     "type": "git",
