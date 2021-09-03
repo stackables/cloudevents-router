@@ -1,4 +1,5 @@
 [![npm](https://img.shields.io/npm/v/cloudevents-router?label=cloudevents-router&logo=npm)](https://www.npmjs.com/package/cloudevents-router)
+[![codecov](https://codecov.io/gh/stackables/cloudevents-router/branch/main/graph/badge.svg?token=ynUW2JLulr)](https://codecov.io/gh/stackables/cloudevents-router)
 
 # Cloud Events Router
 
