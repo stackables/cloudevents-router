@@ -42,6 +42,7 @@ Google Cloud events are described in cloudevents-router-gcp package
 Other known compatible packages include:
 
  - [cloudevents-router-gcp](https://github.com/stackables/cloudevents-router-gcp) - Google Cloud events
+ - [codegen-stackables-webhooks](https://github.com/stackables/codegen-stackables-webhooks) - Stackables Webhooks
 
 ## Consume events
 
