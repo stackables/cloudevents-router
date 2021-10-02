@@ -17,7 +17,7 @@ async function serverRoundtrip(server: Server, path: string, event: string, payl
         method: method,
         url: `http://localhost:${addr.port}${path}`,
         data: message.body,
-        headers: message.headers,
+        headers: message.headers as Record<string, string>,
         validateStatus: () => true
     });
 
