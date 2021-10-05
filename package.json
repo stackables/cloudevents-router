@@ -45,6 +45,6 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "cloudevents": "^4.0.3"
+    "cloudevents": "^5.0.0"
   }
 }
