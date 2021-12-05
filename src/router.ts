@@ -1,6 +1,6 @@
 import type { CloudEvent } from "cloudevents";
 
-export interface TypedCloudEvent<T> extends CloudEvent {
+export interface TypedCloudEvent<T = unknown> extends CloudEvent<T> {
     get data(): T
     set data(value: T)
 }
@@ -28,7 +28,7 @@ export class CloudEventsRouter<D extends Record<string, any>> {
         this.#unhandled = handler
     }
 
-    async process(event: CloudEvent) {
+    async process(event: TypedCloudEvent) {
         let handler = this.#routes[event.type] || this.#unhandled
 
         return Promise.resolve(handler(event))
