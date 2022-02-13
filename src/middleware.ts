@@ -1,5 +1,5 @@
-import { HTTP } from 'cloudevents';
-import type { IncomingMessage, ServerResponse } from 'http'
+import { CloudEvent, HTTP } from 'cloudevents';
+import type { IncomingMessage, ServerResponse } from 'http';
 import { URL } from 'url';
 import { CloudEventsRouter } from './router';
 
@@ -60,10 +60,14 @@ export function getMiddleware(router: CloudEventsRouter<any>, opts: MiddlewareOp
         try {
             // Read message body.
             const body = await readBody(req)
-            const receivedEvent = HTTP.toEvent({ headers: req.headers, body })
+            let receivedEvent = HTTP.toEvent({ headers: req.headers, body }) as CloudEvent<unknown> | CloudEvent<unknown>[]
+
+            if (!Array.isArray(receivedEvent)) {
+                receivedEvent = [receivedEvent]
+            }
 
             // Process the event.
-            await router.process(receivedEvent)
+            await Promise.all(receivedEvent.map(event => router.process(event)))
             res.writeHead(200, 'OK');
             return res.end('OK')
         } catch (error: any) {
