@@ -29,7 +29,7 @@ async function serverRoundtrip(server: Server, path: string, event: string, payl
 }
 
 let router: CloudEventsRouter<any>
-let payload: CloudEvent<unknown>
+let payload: CloudEvent
 
 beforeEach(() => {
     router = new CloudEventsRouter<any>()
