@@ -1,4 +1,4 @@
-import { CloudEvent } from 'cloudevents';
+import type { CloudEvent } from "cloudevents";
 
 export interface TypedCloudEvent<T = unknown> extends CloudEvent<T> {
     get data(): T
