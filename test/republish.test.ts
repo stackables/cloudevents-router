@@ -1,4 +1,5 @@
 import { Message, MessagePublishedData } from '@google/events/cloud/pubsub/v1/MessagePublishedData'
+import assert from 'assert'
 import { CloudEvent } from "cloudevents"
 import { CloudEventsRouter } from '../src'
 
@@ -53,8 +54,8 @@ test('Republish PubSub example', async () => {
             data: {
                 ...event.data,
                 message: {
-                    ...event.data.message,
-                    data: JSON.parse(Buffer.from(event.data.message?.data || 'bnVsbA==', 'base64').toString())
+                    ...event.data?.message,
+                    data: JSON.parse(Buffer.from(event.data?.message?.data || 'bnVsbA==', 'base64').toString())
                 }
             }
         })
@@ -65,6 +66,7 @@ test('Republish PubSub example', async () => {
      * Local handlers still get the original event but message.data is parsed
      */
     router.on('local.pubsub.topic.build-events-1', (event) => {
+        assert(event.data)
         expect(event.data.subscription).toEqual('subscription')
         expect(event.data.message.messageId).toEqual('my-message-id')
         expect(new Date(event.data.message.data.currentTime)).toEqual(new Date('2021-08-08T07:45:45.190Z'))
@@ -72,6 +74,7 @@ test('Republish PubSub example', async () => {
     })
 
     router.on('local.pubsub.topic.build-events-2', (event) => {
+        assert(event.data)
         expect(event.data.subscription).toEqual('subscription')
         expect(event.data.message.messageId).toEqual('my-message-id')
         expect(event.data.message.data.user).toEqual('test user')
