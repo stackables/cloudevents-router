@@ -3,7 +3,7 @@
 
 # Cloud Events Router
 
-The simplest typed  [cloudevents](https://github.com/cloudevents/sdk-javascript) routing library for nodejs. Library has a single dependency to cloudevents npm library.
+The simplest typed [cloudevents](https://github.com/cloudevents/sdk-javascript) routing library for nodejs. Library has a single dependency to cloudevents npm library.
 
 **Library does not provide any input validation, just routing and typecasting!**
 
@@ -19,16 +19,16 @@ npm install cloudevents-router
 // Hand-code or use external events map
 // [type: string]: T
 
-import { MessagePublishedData } from '@google/events/cloud/pubsub/v1/MessagePublishedData';
-import { BuildEventData } from '@google/events/cloud/cloudbuild/v1/BuildEventData';
+import { MessagePublishedData } from "@google/events/cloud/pubsub/v1/MessagePublishedData";
+import { BuildEventData } from "@google/events/cloud/cloudbuild/v1/BuildEventData";
 
 type EventMap = {
-    'google.cloud.pubsub.topic.v1.messagePublished': MessagePublishedData
-    'google.cloud.cloudbuild.build.v1.statusChanged': BuildEventData,
-    'my.custom.event.v1': {
-        username: string
-    }
-}
+	"google.cloud.pubsub.topic.v1.messagePublished": MessagePublishedData;
+	"google.cloud.cloudbuild.build.v1.statusChanged": BuildEventData;
+	"my.custom.event.v1": {
+		username: string;
+	};
+};
 
 /*
 Google Cloud events are described in cloudevents-router-gcp package
@@ -41,77 +41,78 @@ Google Cloud events are described in cloudevents-router-gcp package
 
 Other known compatible packages include:
 
- - [cloudevents-router-gcp](https://github.com/stackables/cloudevents-router-gcp) - Google Cloud events
- - [codegen-stackables-webhooks](https://github.com/stackables/codegen-stackables-webhooks) - Stackables Webhooks
+- [cloudevents-router-gcp](https://github.com/stackables/cloudevents-router-gcp) - Google Cloud events
+- [codegen-stackables-webhooks](https://github.com/stackables/codegen-stackables-webhooks) - Stackables Webhooks
 
 ## Consume events
 
 ```typescript
-import { CloudEventsRouter } from 'cloudevents-router'
+import { CloudEventsRouter } from "cloudevents-router";
 
-const router = new CloudEventsRouter<EventMap>()
+const router = new CloudEventsRouter<EventMap>();
 
-router.on('google.cloud.pubsub.topic.v1.messagePublished', async (event) => {
-    console.log('PubSub ordering key', event.data.message?.orderingKey)
-})
+router.on("google.cloud.pubsub.topic.v1.messagePublished", async (event) => {
+	console.log("PubSub ordering key", event.data.message?.orderingKey);
+});
 
-router.on('google.cloud.cloudbuild.build.v1.statusChanged', async (event) => {
-    console.log('Build images array', event.artifacts?.images)
+router.on("google.cloud.cloudbuild.build.v1.statusChanged", async (event) => {
+	console.log("Build images array", event.artifacts?.images);
 
-    if (!event.artifacts) {
-        // Error in handler will return 500 error code to the producer
-        throw new Error('Artifacts not present')
-    }
-})
+	if (!event.artifacts) {
+		// Error in handler will return 500 error code to the producer
+		throw new Error("Artifacts not present");
+	}
+});
 
 router.onUnhandled((event) => {
-    // This counts as normal consumer for any undefined event
-    // ... so server will always return 200 status code
-    // ... if you don't want to acknowledge events you need to throw from this handler
-    console.log('Unknown event', event)
-})
+	// This counts as normal consumer for any undefined event
+	// ... so server will always return 200 status code
+	// ... if you don't want to acknowledge events you need to throw from this handler
+	console.log("Unknown event", event);
+});
 ```
 
 [See example for more useful PubSub handling](https://github.com/stackables/cloudevents-router/blob/main/test/republish.test.ts)
 
 ## Connect to http server
 
-Using the middleware
+Using the [@whatwg-node/server](https://www.npmjs.com/package/@whatwg-node/server) server adapter
 
 ```typescript
-import { getMiddleware } from "cloudevents-router"
-import http from "http"
+import { getServerAdapter } from "cloudevents-router";
+import http from "http";
 
-const middleware = getMiddleware(router, { path: '/' })
-const server = http.createServer(middleware)
+const middleware = getServerAdapter(router);
+const server = http.createServer(middleware);
 
 server.listen(5000);
 ```
 
-For express you can use the middleware without path configuration
+If you are using express and want have a specific path for cloudevents processing.
 
 ```typescript
-import { getMiddleware } from "cloudevents-router"
-import express from "express"
+import { getServerAdapter } from "cloudevents-router";
+import express from "express";
 
-const app = express()
+const app = express();
 
-app.post('/webhooks', getMiddleware(router))
+app.post("/webhooks", getServerAdapter(router));
 
-app.listen(5000)
+app.listen(5000);
 ```
 
-Return codes from middleware:
+See [@whatwg-node/server](https://www.npmjs.com/package/@whatwg-node/server) for many more integration options.
+
+Return codes from server adapter:
 
 - 200 - OK
-- 405 - Method Not Allowed (not POST request, and not express)
-- 404 - Not Found (path defined and not matching, and not express)
+- 405 - Method Not Allowed
 - 501 - Not Implemented (event not listened, and no onUnhandled listener)
 - 500 - Internal Server Error (error during processing)
 
 ## Manual server configuration
 
-If you are not using a webserver or your framework does not use middleware then you can always manually connect the CloudEventsRouter using the `process()` method. 
+If you are not using a webserver at all or your framework is not supported by ``then you can always manually connect the CloudEventsRouter using the`process()` method.
 
 See more integration examples at https://github.com/cloudevents/sdk-javascript
 
