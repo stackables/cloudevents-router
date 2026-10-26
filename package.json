@@ -44,7 +44,7 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "@whatwg-node/server": "^0.10.12",
+    "@whatwg-node/server": "^0.13.0",
     "cloudevents": ">=8.0.0 <11.0.0"
   },
   "packageManager": "pnpm@10.34.7"
