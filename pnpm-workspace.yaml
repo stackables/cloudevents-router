@@ -1,2 +1,5 @@
 # A release must be 7 days old before pnpm resolves it, also when Renovate refreshes the lockfile.
 minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  # Renovate security update: axios@1.20.0
+  - axios@1.20.0
