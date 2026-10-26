@@ -47,5 +47,5 @@
     "@whatwg-node/server": "^0.13.0",
     "cloudevents": ">=8.0.0 <11.0.0"
   },
-  "packageManager": "pnpm@10.34.7"
+  "packageManager": "pnpm@12.14.0"
 }
