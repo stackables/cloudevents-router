@@ -29,7 +29,7 @@
   "homepage": "https://github.com/stackables/cloudevents-router#readme",
   "devDependencies": {
     "@google/events": "^5.4.0",
-    "@tsconfig/node22": "^22.0.2",
+    "@tsconfig/node24": "^24.0.0",
     "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.3.0",
