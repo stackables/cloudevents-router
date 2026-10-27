@@ -18,6 +18,10 @@ jobs:
       - uses: pnpm/action-setup@v6
       - name: Install dependencies
         run: pnpm install
+      - name: Knip
+        run: pnpm knip
+      - name: Knip (production)
+        run: pnpm knip --production
       - name: Run the tests
         run: pnpm test --coverage
       - name: Upload coverage to Codecov
