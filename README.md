@@ -126,3 +126,7 @@ await router.process(receivedEvent)
 ## Thats it ...
 
 ... happy coding :)
+
+## Releasing
+
+Run `pnpm changeset` in a PR that changes the package and commit the file it creates. When the PR is merged, a "Version Packages" PR is opened; merging that publishes to npm. Renovate PRs add no changeset, so they release nothing.

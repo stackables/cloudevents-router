@@ -4,11 +4,12 @@ on:
     branches:
       - main
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 # id-token: npm trusts this workflow (trusted publishing), so no npm token is needed. The rest is what
-# @semantic-release/github needs to tag, release and comment on the released issues and PRs.
+# changesets/action needs to open the Version Packages PR and create GitHub releases.
 permissions:
   contents: write
-  issues: write
   pull-requests: write
   id-token: write
 
@@ -18,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Setup Node.js
@@ -28,7 +29,10 @@ jobs:
       - uses: pnpm/action-setup@v4
       - name: Install dependencies
         run: pnpm install
-      - name: Release
+      - name: Create Version Packages PR or publish
+        uses: changesets/action@v1
+        with:
+          publish: pnpm ci:publish
+          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm run semantic-release
