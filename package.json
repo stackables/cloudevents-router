@@ -1,6 +1,6 @@
 {
   "name": "cloudevents-router",
-  "version": "1.0.2",
+  "version": "4.0.0",
   "description": "Simple typed message router middleware for consuming cloudevents",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -15,7 +15,7 @@
   "scripts": {
     "prepack": "tsc",
     "test": "jest",
-    "semantic-release": "semantic-release -b main"
+    "ci:publish": "tsc && changeset publish"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/stackables/cloudevents-router#readme",
   "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.1",
     "@google/events": "^5.4.0",
     "@tsconfig/node24": "^24.0.5",
     "@types/express": "^5.0.3",
@@ -36,7 +38,6 @@
     "axios": "^1.11.0",
     "express": "^5.1.0",
     "jest": "^30.0.5",
-    "semantic-release": "^25.0.9",
     "ts-jest": "^29.4.1",
     "typescript": "^5.9.2"
   },

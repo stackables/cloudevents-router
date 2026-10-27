@@ -1,12 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>stackables/renovate-config"],
+  "semanticCommits": "disabled",
   "packageRules": [
-    {
-      "description": "semantic-release publishes on fix: a lockfile the package does not ship changes nothing for its users, so updates are chore and release nothing",
-      "matchPackageNames": ["*"],
-      "semanticCommitType": "chore"
-    },
     {
       "description": "Coverage (jest) and CodeQL check every update",
       "matchUpdateTypes": ["minor", "patch"],
