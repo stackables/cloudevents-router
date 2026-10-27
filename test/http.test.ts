@@ -95,6 +95,23 @@ test("Rejects a non-POST request with 405", async () => {
 	}
 });
 
+test("Passes a handler error to onError", async () => {
+	const errors: Error[] = [];
+	const server = http.createServer(
+		getServerAdapter(router, { onError: (error) => errors.push(error) })
+	);
+	server.listen(0);
+
+	try {
+		const resp = await serverRoundtrip(server, "/", "local.test.2", "test2");
+		assert.equal(resp.status, 500);
+		assert.equal(errors.length, 1);
+		assert.equal(errors[0].message, "This should not be called");
+	} finally {
+		server.close();
+	}
+});
+
 test("Error on multiple definitions", async () => {
 	assert.throws(() => {
 		router.on("local.test.1", (event) => {});
