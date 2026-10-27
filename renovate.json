@@ -4,6 +4,12 @@
   "semanticCommits": "disabled",
   "packageRules": [
     {
+      "description": "Published package: a major update of a runtime dependency widens the range, so users on the old major keep working without changing anything",
+      "matchFileNames": ["package.json"],
+      "matchDepTypes": ["dependencies", "peerDependencies"],
+      "rangeStrategy": "widen"
+    },
+    {
       "description": "Coverage and CodeQL check every update",
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
