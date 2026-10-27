@@ -1,6 +1,6 @@
 import { createServerAdapter as csa } from "@whatwg-node/server";
 import { CloudEvent, HTTP } from "cloudevents";
-import { CloudEventsRouter } from "./router";
+import { CloudEventsRouter } from "./router.ts";
 
 interface RuntimeOptions {
 	onError: (error: Error) => void;

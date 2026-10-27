@@ -1,8 +1,10 @@
 import axios from "axios";
 import { CloudEvent, HTTP } from "cloudevents";
 import express from "express";
-import { AddressInfo, Server } from "net";
-import { CloudEventsRouter, getServerAdapter } from "../src";
+import assert from "node:assert/strict";
+import type { AddressInfo, Server } from "node:net";
+import { beforeEach, test } from "node:test";
+import { CloudEventsRouter, getServerAdapter } from "../src/index.ts";
 
 async function serverRoundtrip(
 	server: Server,
@@ -57,24 +59,24 @@ test("Using express", async () => {
 
 	try {
 		const resp1 = await serverRoundtrip(server, "/", "local.test.1", "test1");
-		expect(resp1).toEqual({ data: "OK", status: 200, statusText: "OK" });
-		expect(payload.data).toEqual("test1");
+		assert.deepEqual(resp1, { data: "OK", status: 200, statusText: "OK" });
+		assert.deepEqual(payload.data, "test1");
 
 		const resp2 = await serverRoundtrip(server, "/", "local.test.2", "test2");
-		expect(resp2).toEqual({
+		assert.deepEqual(resp2, {
 			data: "Internal Server Error",
 			status: 500,
 			statusText: "Internal Server Error",
 		});
-		expect(payload.data).toEqual("test1");
+		assert.deepEqual(payload.data, "test1");
 
 		const resp3 = await serverRoundtrip(server, "/", "local.test.3", "test3");
-		expect(resp3).toEqual({
+		assert.deepEqual(resp3, {
 			data: "Not Implemented",
 			status: 501,
 			statusText: "Not Implemented",
 		});
-		expect(payload.data).toEqual("test1");
+		assert.deepEqual(payload.data, "test1");
 	} finally {
 		server.close();
 	}
@@ -96,8 +98,8 @@ test("Using express with route", async () => {
 			"local.test.1",
 			"test1"
 		);
-		expect(resp1).toEqual({ data: "OK", status: 200, statusText: "OK" });
-		expect(payload.data).toEqual("test1");
+		assert.deepEqual(resp1, { data: "OK", status: 200, statusText: "OK" });
+		assert.deepEqual(payload.data, "test1");
 
 		const resp2 = await serverRoundtrip(
 			server,
@@ -105,7 +107,7 @@ test("Using express with route", async () => {
 			"local.test.2",
 			"test2"
 		);
-		expect(resp2).toEqual({
+		assert.deepEqual(resp2, {
 			data: "Internal Server Error",
 			status: 500,
 			statusText: "Internal Server Error",
@@ -114,13 +116,13 @@ test("Using express with route", async () => {
 		const resp3 = await serverRoundtrip(server, "/webhooks", "local.test.3", {
 			test: "test3",
 		});
-		expect(resp3).toEqual({ data: "OK", status: 200, statusText: "OK" });
-		expect(payload.data).toEqual({ test: "test3" });
+		assert.deepEqual(resp3, { data: "OK", status: 200, statusText: "OK" });
+		assert.deepEqual(payload.data, { test: "test3" });
 
 		const resp4 = await serverRoundtrip(server, "/", "local.test.1", "test1");
-		expect(resp4.status).toEqual(404);
-		expect(resp4.statusText).toEqual("Not Found");
-		expect(resp4.data).toContain("Cannot POST");
+		assert.deepEqual(resp4.status, 404);
+		assert.deepEqual(resp4.statusText, "Not Found");
+		assert.ok(resp4.data.includes("Cannot POST"));
 
 		const resp5 = await serverRoundtrip(
 			server,
@@ -129,9 +131,9 @@ test("Using express with route", async () => {
 			"test1",
 			"GET"
 		);
-		expect(resp5.status).toEqual(404);
-		expect(resp5.statusText).toEqual("Not Found");
-		expect(resp5.data).toContain("Cannot GET");
+		assert.deepEqual(resp5.status, 404);
+		assert.deepEqual(resp5.statusText, "Not Found");
+		assert.ok(resp5.data.includes("Cannot GET"));
 	} finally {
 		server.close();
 	}
@@ -168,8 +170,8 @@ test("Using express with middleware path and body parser", async () => {
 			"local.test.1",
 			"test1"
 		);
-		expect(resp1).toEqual({ data: "OK", status: 200, statusText: "OK" });
-		expect(payload.data).toEqual("test1");
+		assert.deepEqual(resp1, { data: "OK", status: 200, statusText: "OK" });
+		assert.deepEqual(payload.data, "test1");
 
 		const resp2 = await serverRoundtrip(
 			server,
@@ -177,7 +179,7 @@ test("Using express with middleware path and body parser", async () => {
 			"local.test.2",
 			"test2"
 		);
-		expect(resp2).toEqual({
+		assert.deepEqual(resp2, {
 			data: "Internal Server Error",
 			status: 500,
 			statusText: "Internal Server Error",
@@ -186,13 +188,13 @@ test("Using express with middleware path and body parser", async () => {
 		const resp3 = await serverRoundtrip(server, "/webhooks", "local.test.3", {
 			test: "test3",
 		});
-		expect(resp3).toEqual({ data: "OK", status: 200, statusText: "OK" });
-		expect(payload.data).toEqual({ test: "test3" });
+		assert.deepEqual(resp3, { data: "OK", status: 200, statusText: "OK" });
+		assert.deepEqual(payload.data, { test: "test3" });
 
 		const resp4 = await serverRoundtrip(server, "/", "local.test.1", "test1");
-		expect(resp4.status).toEqual(404);
-		expect(resp4.statusText).toEqual("Not Found");
-		expect(resp4.data).toContain("Cannot POST");
+		assert.deepEqual(resp4.status, 404);
+		assert.deepEqual(resp4.statusText, "Not Found");
+		assert.ok(resp4.data.includes("Cannot POST"));
 
 		const resp5 = await serverRoundtrip(
 			server,
@@ -201,9 +203,9 @@ test("Using express with middleware path and body parser", async () => {
 			"test1",
 			"GET"
 		);
-		expect(resp5.status).toEqual(404);
-		expect(resp5.statusText).toEqual("Not Found");
-		expect(resp5.data).toContain("Cannot GET");
+		assert.deepEqual(resp5.status, 404);
+		assert.deepEqual(resp5.statusText, "Not Found");
+		assert.ok(resp5.data.includes("Cannot GET"));
 	} finally {
 		server.close();
 	}

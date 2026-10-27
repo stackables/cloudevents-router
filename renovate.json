@@ -4,7 +4,7 @@
   "semanticCommits": "disabled",
   "packageRules": [
     {
-      "description": "Coverage (jest) and CodeQL check every update",
+      "description": "Coverage and CodeQL check every update",
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     }

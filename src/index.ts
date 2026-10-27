@@ -1,2 +1,2 @@
-export * from "./router";
-export * from "./whatwg";
+export * from "./router.ts";
+export * from "./whatwg.ts";

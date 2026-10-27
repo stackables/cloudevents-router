@@ -1,10 +1,11 @@
-import {
+import type {
 	Message,
 	MessagePublishedData,
 } from "@google/events/cloud/pubsub/v1/MessagePublishedData";
-import assert from "assert";
 import { CloudEvent } from "cloudevents";
-import { CloudEventsRouter } from "../src";
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { CloudEventsRouter } from "../src/index.ts";
 
 // This is a bit hackish
 //      as the resulting type for message will be intersection with string
@@ -74,9 +75,10 @@ test("Republish PubSub example", async () => {
 	 */
 	router.on("local.pubsub.topic.build-events-1", (event) => {
 		assert(event.data);
-		expect(event.data.subscription).toEqual("subscription");
-		expect(event.data.message.messageId).toEqual("my-message-id");
-		expect(new Date(event.data.message.data.currentTime)).toEqual(
+		assert.equal(event.data.subscription, "subscription");
+		assert.equal(event.data.message.messageId, "my-message-id");
+		assert.deepEqual(
+			new Date(event.data.message.data.currentTime),
 			new Date("2021-08-08T07:45:45.190Z")
 		);
 		called++;
@@ -84,9 +86,9 @@ test("Republish PubSub example", async () => {
 
 	router.on("local.pubsub.topic.build-events-2", (event) => {
 		assert(event.data);
-		expect(event.data.subscription).toEqual("subscription");
-		expect(event.data.message.messageId).toEqual("my-message-id");
-		expect(event.data.message.data.user).toEqual("test user");
+		assert.equal(event.data.subscription, "subscription");
+		assert.equal(event.data.message.messageId, "my-message-id");
+		assert.equal(event.data.message.data.user, "test user");
 		called++;
 	});
 
@@ -112,5 +114,5 @@ test("Republish PubSub example", async () => {
 	});
 	await publishFakeEvent("build-events-2", { user: "test user" });
 
-	expect(called).toEqual(2);
+	assert.equal(called, 2);
 });

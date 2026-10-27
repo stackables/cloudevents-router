@@ -14,7 +14,8 @@
   ],
   "scripts": {
     "prepack": "tsc",
-    "test": "jest",
+    "test": "node --experimental-transform-types --test test/*.test.ts",
+    "test:coverage": "node --experimental-test-coverage --test-coverage-exclude=\"test/**\" --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=lcov.info --experimental-transform-types --test test/*.test.ts",
     "knip": "knip",
     "ci:publish": "tsc && changeset publish"
   },
@@ -34,17 +35,11 @@
     "@google/events": "^5.4.0",
     "@tsconfig/node24": "^24.0.5",
     "@types/express": "^5.0.3",
-    "@types/jest": "^30.0.0",
     "@types/node": "^24.3.0",
     "axios": "^1.11.0",
     "express": "^5.1.0",
-    "jest": "^30.0.5",
     "knip": "6.42.0",
-    "ts-jest": "^29.4.1",
-    "typescript": "^5.9.2"
-  },
-  "jest": {
-    "preset": "ts-jest"
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "@whatwg-node/server": "^0.13.0",

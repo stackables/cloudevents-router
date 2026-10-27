@@ -1,8 +1,10 @@
 import axios from "axios";
 import { CloudEvent, HTTP } from "cloudevents";
-import http, { Server } from "http";
-import { AddressInfo } from "net";
-import { CloudEventsRouter, getServerAdapter } from "../src";
+import http from "node:http";
+import assert from "node:assert/strict";
+import type { AddressInfo, Server } from "node:net";
+import { beforeEach, test } from "node:test";
+import { CloudEventsRouter, getServerAdapter } from "../src/index.ts";
 
 async function serverRoundtrip(
 	server: Server,
@@ -56,24 +58,24 @@ test("Using build in http server", async () => {
 
 	try {
 		const resp1 = await serverRoundtrip(server, "/", "local.test.1", "test1");
-		expect(resp1).toEqual({ data: "OK", status: 200, statusText: "OK" });
-		expect(payload.data).toEqual("test1");
+		assert.deepEqual(resp1, { data: "OK", status: 200, statusText: "OK" });
+		assert.deepEqual(payload.data, "test1");
 
 		const resp2 = await serverRoundtrip(server, "/", "local.test.2", "test2");
-		expect(resp2).toEqual({
+		assert.deepEqual(resp2, {
 			data: "Internal Server Error",
 			status: 500,
 			statusText: "Internal Server Error",
 		});
-		expect(payload.data).toEqual("test1");
+		assert.deepEqual(payload.data, "test1");
 
 		const resp3 = await serverRoundtrip(server, "/", "local.test.3", "test3");
-		expect(resp3).toEqual({
+		assert.deepEqual(resp3, {
 			data: "Not Implemented",
 			status: 501,
 			statusText: "Not Implemented",
 		});
-		expect(payload.data).toEqual("test1");
+		assert.deepEqual(payload.data, "test1");
 	} finally {
 		server.close();
 	}
@@ -85,15 +87,33 @@ test("Rejects a non-POST request with 405", async () => {
 
 	try {
 		const resp = await serverRoundtrip(server, "/", "local.test.1", "test1", "GET");
-		expect(resp).toMatchObject({ data: "Method Not Allowed", status: 405 });
-		expect(payload).toEqual({});
+		assert.equal(resp.data, "Method Not Allowed");
+		assert.equal(resp.status, 405);
+		assert.deepEqual(payload, {});
+	} finally {
+		server.close();
+	}
+});
+
+test("Passes a handler error to onError", async () => {
+	const errors: Error[] = [];
+	const server = http.createServer(
+		getServerAdapter(router, { onError: (error) => errors.push(error) })
+	);
+	server.listen(0);
+
+	try {
+		const resp = await serverRoundtrip(server, "/", "local.test.2", "test2");
+		assert.equal(resp.status, 500);
+		assert.equal(errors.length, 1);
+		assert.equal(errors[0].message, "This should not be called");
 	} finally {
 		server.close();
 	}
 });
 
 test("Error on multiple definitions", async () => {
-	expect(() => {
+	assert.throws(() => {
 		router.on("local.test.1", (event) => {});
-	}).toThrow();
+	});
 });
