@@ -79,6 +79,19 @@ test("Using build in http server", async () => {
 	}
 });
 
+test("Rejects a non-POST request with 405", async () => {
+	const server = http.createServer(getServerAdapter(router));
+	server.listen(0);
+
+	try {
+		const resp = await serverRoundtrip(server, "/", "local.test.1", "test1", "GET");
+		expect(resp).toMatchObject({ data: "Method Not Allowed", status: 405 });
+		expect(payload).toEqual({});
+	} finally {
+		server.close();
+	}
+});
+
 test("Error on multiple definitions", async () => {
 	expect(() => {
 		router.on("local.test.1", (event) => {});

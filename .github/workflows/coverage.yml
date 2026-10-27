@@ -6,18 +6,19 @@ jobs:
   release:
     name: Coverage
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v7
+      # Installs pnpm and the Node version from .nvmrc, then runs the frozen install.
+      - uses: pnpm/setup@v3
         with:
-          node-version: "24"
-      - uses: pnpm/action-setup@v6
-      - name: Install dependencies
-        run: pnpm install
+          cache: true
+          require-lockfile: true
       - name: Knip
         run: pnpm knip
       - name: Knip (production)
@@ -26,3 +27,6 @@ jobs:
         run: pnpm test --coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v7
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
