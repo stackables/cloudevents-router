@@ -39,7 +39,7 @@
     "axios": "^1.11.0",
     "express": "^5.1.0",
     "knip": "6.42.0",
-    "typescript": "^5.9.2"
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "@whatwg-node/server": "^0.13.0",

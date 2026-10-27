@@ -2,6 +2,7 @@
     "extends": "@tsconfig/node24/tsconfig.json",
     "compilerOptions": {
         "outDir": "build",
+        "rootDir": "src",
         "declaration": true,
         "strictNullChecks": true,
         "isolatedModules": true,
