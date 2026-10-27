@@ -1,7 +1,2 @@
-# No dependency runs its install script, as before pnpm 11 made an unlisted one an error. jest's optional native
-# helpers (@parcel/watcher, unrs-resolver) ship prebuilt binaries and need no build.
-allowBuilds:
-  '@parcel/watcher': false
-  unrs-resolver: false
 # A release must be 7 days old before pnpm resolves it, also when Renovate refreshes the lockfile.
 minimumReleaseAge: 10080

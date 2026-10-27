@@ -4,7 +4,8 @@
         "outDir": "build",
         "declaration": true,
         "strictNullChecks": true,
-        "isolatedModules": true
+        "isolatedModules": true,
+        "rewriteRelativeImportExtensions": true
     },
     "include": [
         "src"
