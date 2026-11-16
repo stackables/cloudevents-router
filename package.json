@@ -38,7 +38,7 @@
     "@types/node": "^24.3.0",
     "axios": "^1.11.0",
     "express": "^5.1.0",
-    "knip": "6.44.1",
+    "knip": "6.44.2",
     "typescript": "^7.0.2"
   },
   "dependencies": {
