@@ -305,8 +305,8 @@ packages:
     resolution: {integrity: sha512-BnHXPcYTGl6bskFwaeOwt7G2KwHhATOMfc2ojMno7QMFKBSxkmPs6o092LDJ+PTNHk7wv4pTIWhP4LsJkvHIew==}
     engines: {node: '>=22.15.0'}
 
-  '@fastify/busboy@3.2.5':
-    resolution: {integrity: sha512-y8MTAeBlEQUNVnskmZQwpseZN3EgCksQNOULlfxWY6o6VEqh01+oExMgbM7gN6YLQ8pNDYeweNPKJRt8jQm2ZQ==}
+  '@fastify/busboy@3.2.6':
+    resolution: {integrity: sha512-UPXdyAMbz/gNvjS8HONpJR2TDaHM3wQKMtSRPFkoh2LTeRRtnm+ICVYKgBYkTwlPOVzDNynOd34EH8qapwfelQ==}
 
   '@google/events@5.4.0':
     resolution: {integrity: sha512-x2XUslYOzWGxP/Fox0nicmJAcqHBpv1Ji4kGQayxHfQExrvMYbSkSZx7zcQPeF+LHtiZg7/CYpKGx8mO0XoUgw==}
@@ -566,8 +566,8 @@ packages:
   '@tsconfig/node26@26.0.2':
     resolution: {integrity: sha512-RIBSoNGQxUQ8r4hSrEzS6TrUneoKaCuX6BjL4zF3wqttGq2w06zCea4d8P1gRvM/HZyDT1FQJ8trZSyy/63oMg==}
 
-  '@tybys/wasm-util@0.10.4':
-    resolution: {integrity: sha512-W3c4gRigFS0T/Ma4qIYF3GDAc5AQdHb1yL5znJT1Zv1YaD9Kitx656wBjvr19qbiosmZT8lWDM5BEMynUqX65A==}
+  '@tybys/wasm-util@0.10.5':
+    resolution: {integrity: sha512-dOGOPxlaNV+G046mZzN+9C0dAcQZeSKcXiVaM0TYy/LM4ttTmgSBDxYfovcYI8Em3+eAbiAYpvWLOv8+ZVRJKA==}
 
   '@types/body-parser@1.19.6':
     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
@@ -1439,7 +1439,7 @@ snapshots:
       '@whatwg-node/promise-helpers': 2.0.2
       tslib: 2.9.1
 
-  '@fastify/busboy@3.2.5': {}
+  '@fastify/busboy@3.2.6': {}
 
   '@google/events@5.4.0': {}
 
@@ -1462,7 +1462,7 @@ snapshots:
     dependencies:
       '@emnapi/core': 1.11.2
       '@emnapi/runtime': 1.11.2
-      '@tybys/wasm-util': 0.10.4
+      '@tybys/wasm-util': 0.10.5
     optional: true
 
   '@oxc-parser/binding-android-arm-eabi@0.156.0':
@@ -1589,7 +1589,7 @@ snapshots:
 
   '@tsconfig/node26@26.0.2': {}
 
-  '@tybys/wasm-util@0.10.4':
+  '@tybys/wasm-util@0.10.5':
     dependencies:
       tslib: 2.9.1
     optional: true
@@ -1707,7 +1707,7 @@ snapshots:
 
   '@whatwg-node/node-fetch@0.9.4':
     dependencies:
-      '@fastify/busboy': 3.2.5
+      '@fastify/busboy': 3.2.6
       '@whatwg-node/disposablestack': 0.1.0
       '@whatwg-node/promise-helpers': 2.0.2
       tslib: 2.9.1
