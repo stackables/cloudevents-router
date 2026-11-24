@@ -14,8 +14,8 @@
   ],
   "scripts": {
     "prepack": "tsc",
-    "test": "node --experimental-transform-types --test test/*.test.ts",
-    "test:coverage": "node --experimental-test-coverage --test-coverage-exclude=\"test/**\" --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=lcov.info --experimental-transform-types --test test/*.test.ts",
+    "test": "node --test test/*.test.ts",
+    "test:coverage": "node --experimental-test-coverage --test-coverage-exclude=\"test/**\" --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=lcov.info --test test/*.test.ts",
     "knip": "knip",
     "ci:publish": "tsc && changeset publish"
   },
